@@ -2,6 +2,17 @@ let filterType = document.querySelector("#filterType");
 let resetBtn = document.querySelector(".reset");
 let card_container = document.querySelector(".card_container");
 let input = document.querySelector("input");
+let storedData = JSON.parse(localStorage.getItem("pokes")) || [];
+if (storedData.length === 0) {
+  window.onload = () => {
+    getData();
+    creatOption();
+  };
+} else {
+  storedData.forEach((item) => {
+    displayData(item);
+  });
+}
 
 const pokemonTypeColors = {
   normal: "#A8A878",
@@ -36,7 +47,7 @@ function creatOption(params) {
 
 // onload fetch all
 
-async function getData(limit = 25) {
+async function getData(limit = 250) {
   let url2 = `https://pokeapi.co/api/v2/pokemon?limit=${limit}`;
 
   try {
@@ -69,15 +80,12 @@ async function getData(limit = 25) {
   }
 }
 
-window.onload = () => {
-  getData();
-  creatOption();
-};
-
 resetBtn.addEventListener("click", () => {
-  window.location.href = "index.html";
+  storedData.forEach((item) => {
+    displayData(item);
+  });
 });
-
+localStorage.setItem("pokes", JSON.stringify(arr));
 function displayData(data) {
   let types = "";
   for (let index = 0; index < data.types.length; index++) {
