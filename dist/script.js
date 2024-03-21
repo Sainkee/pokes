@@ -1,6 +1,5 @@
 let filterType = document.querySelector("#filterType");
 let resetBtn = document.querySelector(".reset");
-let searchBtn = document.querySelector(".search");
 let card_container = document.querySelector(".card_container");
 let input = document.querySelector("input");
 
@@ -24,18 +23,20 @@ const pokemonTypeColors = {
   steel: "#B8B8D0",
   fairy: "#EE99AC",
 };
+let arr = [];
 
-Object.keys(pokemonTypeColors).forEach((type) => {
-  let option = document.createElement("option");
-  option.value = type.toLowerCase();
-  option.innerText = type;
-  filterType.appendChild(option);
-});
+function creatOption(params) {
+  Object.keys(pokemonTypeColors).forEach((type) => {
+    let option = document.createElement("option");
+    option.value = type.toLowerCase();
+    option.innerText = type;
+    filterType.appendChild(option);
+  });
+}
 
 // onload fetch all
 
-async function getData(params, limit = 250) {
-  // let url = "https://pokeapi.co/api/v2/pokemon/";
+async function getData(limit = 25) {
   let url2 = `https://pokeapi.co/api/v2/pokemon?limit=${limit}`;
 
   try {
@@ -45,17 +46,10 @@ async function getData(params, limit = 250) {
       throw new Error("Network response was not ok");
     }
 
-    var data = await response.json();
-    if (params) {
-      var filterd = data.results.filter((pokes) => {
-        return pokes.name.includes(params.toLowerCase());
-      });
-    }
-
-    console.log(data);
+    let data = await response.json();
     card_container.innerHTML = "";
     data.results.forEach((pok) => {
-      console.log(pok.url);
+      // console.log(pok.url);
       let url = pok.url;
 
       fetch(url)
@@ -63,58 +57,8 @@ async function getData(params, limit = 250) {
           return data.json();
         })
         .then((data) => {
-          // card me show karwana
-
-          card_container.innerHTML += `
-          
-          <div  class="card tracking-wide ${
-            data.types[0].type.name
-          } shadow-lg rounded-lg overflow-hidden text-white w-64 border-2 p-4 relative">
-        <div class="flex justify-between">
-          <span>#0${data.id}</span>
-          <span
-            class="${
-              data.types[0].type.name + data.types[0].type.name.slice(-1)
-            } h-[1rem] w-[2em] shadow-emerald-400 rounded-sm"
-          >
-          </span>
-        </div>
-        <div class="flex justify-center">
-          <section class="stage">
-            <figure class="ball bubble"></figure>
-          </section>
-        </div>
-        <div>
-          <img
-            src="${data.sprites.other.dream_world.front_default}"
-            alt=""
-            class="w-[120px] h-[100px] absolute top-[80px] left-16 mx-auto"
-          />
-        </div>
-
-        <div class="p-4 text-center">
-          <h2 class="font-bold text-xl  tracking-wider my-3">${
-            data.name.slice(0, 1).toUpperCase() + data.name.slice(1)
-          }</h2>
-          <div class="flex justify-around items-center">
-            <div>
-              <p class="text-[#ccc] text-xs">Weight</p>
-              <p>${data.weight}</p>
-            </div>
-            <div>
-              <p class="text-[#ccc] text-xs">height</p>
-              <p>${data.height}</p>
-            </div>
-          </div>
-          <p class="text-[#ccc] my-4">
-            Type: <span class="type text-[white] font-semibold">${
-              data.types[0].type.name
-            }/${data.types[1].type.name}</span>
-          </p>
-        </div>
-      </div> 
-          
-          `;
+          displayData(data);
+          arr.push(data);
         })
         .catch((error) => {
           console.error(error);
@@ -125,13 +69,97 @@ async function getData(params, limit = 250) {
   }
 }
 
-window.onload = getData();
-
-searchBtn.addEventListener("click", () => {
-  let val = input.value;
-  getData(val.trim());
-});
+window.onload = () => {
+  getData();
+  creatOption();
+};
 
 resetBtn.addEventListener("click", () => {
   window.location.href = "index.html";
 });
+
+function displayData(data) {
+  let types = "";
+  for (let index = 0; index < data.types.length; index++) {
+    types += data.types[index].type.name;
+    if (index !== data.types.length - 1) {
+      types += "/";
+    }
+  }
+
+  card_container.innerHTML += `
+          
+    <div  class="card text-[#ccc] tracking-wide group transform-gpu hover:ease-in-out ${
+      data.types[0].type.name
+    } shadow-lg rounded-lg overflow-hidden  w-64 border-2 p-4 relative">
+  <div class="flex justify-between shadow-emerald-50 ">
+    <span>#0${data.id}</span>
+    <span
+      class="${
+        data.types[0].type.name + data.types[0].type.name.slice(-1)
+      } h-[1rem] w-[2em] shadow-emerald-400 rounded-sm"
+    >
+    </span>
+  </div>
+  <div class="flex justify-center">
+    <section class="stage">
+      <figure class="ball bubble"></figure>
+    </section>
+  </div>
+  <div>
+    <img
+      src="${data.sprites.other.dream_world.front_default}"
+      alt=""
+      class="w-[150px] h-[120px] absolute top-[80px] left-14 mx-auto group transform-gpu cursor-pointer hover:animate-bounce"
+    />
+  </div>
+
+  <div class="p-4 text-center">
+    <h2 class="font-bold text-xl  tracking-wider my-3">${
+      data.name.slice(0, 1).toUpperCase() + data.name.slice(1)
+    }</h2>
+    <div class="flex justify-around items-center">
+      <div>
+        <p class="text-[#ccc] text-xs">Weight</p>
+        <p>${data.weight}</p>
+      </div>
+      <div>
+        <p class="text-[#ccc] text-xs">Height</p>
+        <p>${data.height}</p>
+      </div>
+    </div>
+    <p class="text-[#ccc] my-4">
+      Type: <span class="type text-[white] font-semibold">${types}</span>
+    </p>
+  </div>
+</div> 
+    
+    `;
+}
+
+filterType.addEventListener("change", () => {
+  filterData(filterType.value);
+});
+
+input.addEventListener("input", (e) => {
+  filterData(e.target.value.toLowerCase());
+});
+
+function filterData(param) {
+  let filtered = arr.filter((data) => {
+    let types = "";
+    for (let index = 0; index < data.types.length; index++) {
+      types += data.types[index].type.name;
+      if (index !== data.types.length - 1) {
+        types += " ";
+      }
+    }
+    return types.includes(param) || data.name === param;
+  });
+
+  card_container.innerHTML = "";
+
+  filtered.forEach((pok) => {
+    displayData(pok);
+  });
+}
