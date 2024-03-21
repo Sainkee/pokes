@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="output.css" />
+  </head>
+  <body class="bg-black">
+    <div
+      class="h-[89vh] bg-gradient-to-r from-green-500 to-green-700 hero -z-10"
+    >
+      <img
+        src="https://fontmeme.com/permalink/240319/ad8973a59efc88fffe8ba7d72441bf79.png"
+        alt="pokemon-font"
+        border="0"
+        class="mx-auto p-10 md:w-[35%] w-[70%]"
+      />
+
+      <div class="flex justify-around w-[80%] mx-auto pb-10">
+        <div class="w-[100%] md:pt-5 text-white">
+          <h1 class="text-6xl font-bold text-white mb-7">Ivyasuar</h1>
+          <div>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. At laborum
+            temporibus ducimus tenetur nemo
+            <span class="hidden md:block"
+              >libero f libero fugiat asperiores numquam ratione ea corrupti
+              cupiditate corporis quam sit tempore, veniam culpa. Minima earum
+              voluptatum similique praesentium distinctio, fugiat sed nemo
+              optio,ugiat asperiores numquam ratione ea corrupti cupiditate
+              corporis quam sit tempore, veniam culpa. Minima earum voluptatum
+              similique praesentium distinctio, fugiat sed nemo optio,</span
+            >
+          </div>
+        </div>
+        <div>
+          <img
+            src="https://ssb.wiki.gallery/images/thumb/5/52/Ivysaur_SSBU.png/1200px-Ivysaur_SSBU.png"
+            alt="Ivysaur"
+            class="md:w-[55%] md:-mt-[10%] mx-auto"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="w-[80%] mx-auto mb-10 flex gap-4 flex-wrap justify-center mt-[90vh]"
+    >
+      <select
+        name="filter"
+        id="filterType"
+        class="px-6 md:py-2 bg-black text-white border grow"
+      >
+        <!-- Options will be dynamically added here -->
+      </select>
+
+      <span class="sm:w-full w-[100%] md:w-[40%]"
+        ><input
+          type="text"
+          class="px-4 md:py-[9px] bg-black border text-white border-[#ccc] outline-none grow w-full"
+          name="pokName"
+          id="pokName"
+          placeholder="Enter PokName.."
+      /></span>
+
+      <span class="md:-mx-4 md:mr-2">
+        <button
+          class="px-4 grow py-1 text-3xl bg-gradient-to-br from-pink-100 to-purple-800 text-white search"
+        >
+          &#x1F50D;
+        </button></span
+      >
+      <button type="reset" class="px-4 grow bg-red-800 reset text-white">
+        Reset
+      </button>
+    </div>
+    <!-- hero end -->
+
+    <div
+      class="card_container flex justify-center flex-wrap gap-4 items-center mt-8"
+    ></div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
