@@ -154,7 +154,13 @@ function filterData(param) {
         types += " ";
       }
     }
-    return types.includes(param) || data.name === param;
+    return (
+      types.includes(param) ||
+      data.name.toLowerCase().startsWith(param) ||
+      data.id === Number(param) ||
+      data.weight === Number(param) ||
+      data.height === Number(param)
+    );
   });
 
   card_container.innerHTML = "";

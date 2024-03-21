@@ -647,6 +647,10 @@ video {
   width: 100%;
 }
 
+.w-\[50\%\] {
+  width: 50%;
+}
+
 .grow {
   flex-grow: 1;
 }
@@ -801,6 +805,10 @@ video {
 
 .pl-\[30px\] {
   padding-left: 30px;
+}
+
+.pl-4 {
+  padding-left: 1rem;
 }
 
 .text-center {
@@ -1380,6 +1388,16 @@ video {
 @media (min-width: 640px) {
   .sm\:w-full {
     width: 100%;
+  }
+
+  .sm\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .sm\:text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
 }
 
