@@ -47,7 +47,7 @@ function creatOption(params) {
 
 // onload fetch all
 
-async function getData(limit = 250) {
+async function getData(limit = 25) {
   let url2 = `https://pokeapi.co/api/v2/pokemon?limit=${limit}`;
 
   try {
@@ -80,11 +80,6 @@ async function getData(limit = 250) {
   }
 }
 
-resetBtn.addEventListener("click", () => {
-  storedData.forEach((item) => {
-    displayData(item);
-  });
-});
 localStorage.setItem("pokes", JSON.stringify(arr));
 function displayData(data) {
   let types = "";
@@ -177,3 +172,11 @@ function filterData(param) {
     displayData(pok);
   });
 }
+
+resetBtn.addEventListener("click", () => {
+  console.log("hi");
+  card_container.innerHTML = "";
+  arr.forEach((item) => {
+    displayData(item);
+  });
+});
